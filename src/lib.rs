@@ -88,8 +88,6 @@
 // expanded code that is entirely in const.
 #![allow(clippy::absurd_extreme_comparisons)]
 
-use crunchy::unroll;
-
 pub mod multilinear;
 pub use multilinear::{MultilinearRectilinear, MultilinearRegular};
 
@@ -134,10 +132,11 @@ pub(crate) fn index_arr_fixed_dims<T: Copy, const N: usize>(
 ) -> T {
     let mut i = 0;
 
-    unroll! {
-        for j < 7 in 0..N {
-            i += loc[j] * dimprod[j];
-        }
+    // unroll! {
+    //     for j < 7 in 0..N {
+    for j in 0..N {
+        i += loc[j] * dimprod[j];
+        // }
     }
 
     data[i]
